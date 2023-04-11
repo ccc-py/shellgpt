@@ -1,7 +1,7 @@
-# ShortGPT
+# ShellGPT
 
 ```
-$ shortgpt.sh
+$ python shellgpt.py
 Welcome to shortgpt. You may use the following commands
 1. quit
 2. history
