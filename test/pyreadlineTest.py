@@ -1,8 +1,10 @@
-#import readline
-#import pyreadline as readline
-from pyreadline import Readline
+from sys import platform
 
-readline = Readline()
+if platform == "win32":
+    from pyreadline import Readline
+    readline = Readline()
+else:
+    import readline
 
 # 设置历史记录文件的路径
 histfile = ".python_history"
