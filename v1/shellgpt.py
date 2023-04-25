@@ -2,7 +2,6 @@ import os
 import sys
 import json
 import openai
-import history
 # import readline # this module is not meant to work on Windows
 # from pyreadline3 import *
 import threading
@@ -163,11 +162,9 @@ print('* kset <key> <value>')
 print('You may use the following $key for short')
 printKeys()
 
-history.start()
 commandList = []
 while True:
-    command = history.input('\ncommand> ')
-    command = command.strip()
+    command = input('\ncommand> ')
     if command == 'quit': break
     commandList.append(command)
     try:
@@ -175,4 +172,3 @@ while True:
     except Exception as err:
         print(f"Error: {err}, {type(err)}")
 
-history.end()
