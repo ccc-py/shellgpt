@@ -33,11 +33,15 @@ def printKeys():
     print(json.dumps(keys, indent=2, ensure_ascii=False))
 
 def chat(question):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=PSTACK+[{"role": "user", "content": f"{question}"}]
-    )
-    return response['choices'][0]['message']['content']
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=PSTACK+[{"role": "user", "content": f"{question}"}]
+        )
+        return response['choices'][0]['message']['content']
+    except Exception:
+        print("Error: openai chat api fail!")
+        return "Error: openai chat api fail!"
 
 def readfile(fname):
     try:
@@ -152,13 +156,13 @@ print('* quit')
 print('* history')
 print('* shell <command>')
 print('* chat <prompt>')
-print('* fchat <file> <prompt>\n')
-print('* plist\n')
-print('* pclear\n')
-print('* ppush <prompt>\n')
-print('* ppop\n')
-print('* pinsert <i> <prompt>\n')
-print('* pdelete <i>\n')
+print('* fchat <file> <prompt>')
+print('* plist')
+print('* pclear')
+print('* ppush <prompt>')
+print('* ppop')
+print('* pinsert <i> <prompt>')
+print('* pdelete <i>')
 print('* kset <key> <value>')
 print('You may use the following $key for short')
 printKeys()

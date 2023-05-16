@@ -6,7 +6,7 @@ histfile = ".python_history"
 def start():
     print('platform=', platform)
     if platform == "win32":
-        from pyreadline import Readline
+        from pyreadline3 import Readline
         global readline
         readline = Readline()
     else:
