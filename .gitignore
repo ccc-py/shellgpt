@@ -3,3 +3,4 @@ bak
 *.exe
 *.zip
 __pycache__/
+.python_history
