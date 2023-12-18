@@ -1,16 +1,21 @@
 import os
 import sys
 import json
-import openai
+from openai import OpenAI
 import history
 # import readline # this module is not meant to work on Windows
 # from pyreadline3 import *
 import threading
 
+ai = OpenAI(
+    # This is the default and can be omitted
+    # api_key=os.environ.get("OPENAI_API_KEY"),
+)
+
 PSTACK = [
     {"role": "system", "content": "You are a chatbot"},
     {"role": "user", "content": "輸出為 繁體中文"},
-    {"role": "user", "content": "盡量寫詳細點，每次回答至少輸出 2000 字，以 markdown 格式輸出"},
+    {"role": "user", "content": "盡量寫詳細點，每次回答至少輸出 2000 字，以 markdown 格式輸出，數學式用 latex 格式"},
 ]
 
 keys = {
@@ -34,13 +39,15 @@ def printKeys():
 
 def chat(question):
     try:
-        response = openai.ChatCompletion.create(
+        response = ai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=PSTACK+[{"role": "user", "content": f"{question}"}]
         )
-        return response['choices'][0]['message']['content']
-    except Exception:
-        print("Error: openai chat api fail!")
+        return response.choices[0].message.content
+        # return response['choices'][0]['message']['content']
+    except Exception as error:
+        print(f"OpenAI API returned an API Error: {error}")
+        # print("Error: openai chat api fail!")
         return "Error: openai chat api fail!"
 
 def readfile(fname):
@@ -149,7 +156,8 @@ def handleCommand(command):
         print('Command error, try again!')
 
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+# print(openai.api_key)
 
 print('Welcome to shortgpt. You may use the following commands')
 print('* quit')
